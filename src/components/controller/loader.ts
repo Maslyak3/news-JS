@@ -1,13 +1,15 @@
 interface RequestParamModel {
     endpoint: string;
-    options: Options;
+    options?: Options;
 }
 
 interface Options {
     [key: string]: string
 }
 
-type CallbackType<T> = (data: T) => void;
+export type CallbackType<T> = (data: T) => void;
+
+
 class Loader {
     baseLink: string;
     options;
