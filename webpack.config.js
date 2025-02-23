@@ -13,10 +13,15 @@ const baseConfig = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.tsx?$/,             // Matches .ts and .tsx files
+                use: 'ts-loader',            // Or 'babel-loader' with presets
+                exclude: /node_modules/,     // Exclude dependencies
+            },
         ],
     },
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.tsx'],
     },
     output: {
         filename: 'index.js',

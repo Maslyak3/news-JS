@@ -1,3 +1,5 @@
+import { ControllerCallback } from "./controller";
+
 interface RequestParamModel {
     endpoint: string;
     options?: Options;
@@ -7,21 +9,26 @@ interface Options {
     [key: string]: string
 }
 
+enum responceCode {
+    defaultError = 401,
+    notFoundError = 404
+}
+
 export type CallbackType<T> = (data: T) => void;
 
 
 class Loader {
     baseLink: string;
-    options;
+    options: Options;
 
     constructor(baseLink: string, options: Options) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
-    getResp(
+    getResp<T>(
         { endpoint, options = {} }: RequestParamModel,
-        callback = () => {
+        callback: ControllerCallback<T> = () => {
             console.error('No callback for GET response');
         }
     ) {
@@ -30,7 +37,7 @@ class Loader {
 
     errorHandler(res: Response) {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            if (res.status === responceCode.defaultError || res.status === responceCode.notFoundError)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
