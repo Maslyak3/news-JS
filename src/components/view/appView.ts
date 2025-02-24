@@ -40,6 +40,20 @@ export class AppView {
         this.sources.draw(values);
     }
 }
-
+function updateDateTime (): void {
+    const dateTimeElement = document.getElementById('datetime') as HTMLElement;
+    const now: Date = new Date();
+    const formattedTime: string = now.toLocaleString('en-GB', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+    dateTimeElement.textContent = formattedTime;
+}
+setInterval(updateDateTime, 1000);
 export default AppView;
 
